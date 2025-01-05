@@ -25,14 +25,14 @@ class CallpayPaymentMethodForm extends PaymentMethodForm
                 TextField::class,
                 TextFieldOption::make()
                     ->label(__('Username Key'))
-                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('username', CALLPAY_PAYMENT_METHOD_NAME))
+                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('username', CALLPAY_PAYMENT_METHOD_NAME) ?? getenv('CALLPAY_USERNAME_KEY'))
             )
             ->add(
                 sprintf('payment_%s_password', CALLPAY_PAYMENT_METHOD_NAME),
                 'password',
                 TextFieldOption::make()
                     ->label(__('Password Key'))
-                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('password', CALLPAY_PAYMENT_METHOD_NAME))
+                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('password', CALLPAY_PAYMENT_METHOD_NAME) ?? getenv('CALLPAY_PASSWORD_KEY'))
             )
 
             ->add(
@@ -40,7 +40,15 @@ class CallpayPaymentMethodForm extends PaymentMethodForm
                 TextField::class,
                 TextFieldOption::make()
                     ->label(__('Salt Key'))
-                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('salt_key', CALLPAY_PAYMENT_METHOD_NAME))
+                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('salt_key', CALLPAY_PAYMENT_METHOD_NAME) ?? getenv('CALLPAY_SALT_KEY'))
+            )
+
+            ->add(
+                sprintf('payment_%s_user_id', CALLPAY_PAYMENT_METHOD_NAME),
+                TextField::class,
+                TextFieldOption::make()
+                    ->label(__('Callpay Merchant ID'))
+                    ->value(BaseHelper::hasDemoModeEnabled() ? '*******************************' : get_payment_setting('user_id', CALLPAY_PAYMENT_METHOD_NAME) ?? getenv('CALLPAY_MERCHANT_ID'))
             );
     }
 }

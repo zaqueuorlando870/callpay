@@ -18,7 +18,8 @@ class Plugin extends PluginOperationAbstract
             'payment_callpay_name',
             'payment_callpay_description',
             'payment_callpay_username',
-            'payment_callpay_merchant_email',
+            'payment_callpay_salt_key',
+            'payment_callpay_user_id',
             'payment_callpay_status',
         ]);
     }

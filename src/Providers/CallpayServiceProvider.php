@@ -29,6 +29,7 @@ class CallpayServiceProvider extends ServiceProvider
             'callpay.usernameKey' => get_payment_setting('username', CALLPAY_PAYMENT_METHOD_NAME),
             'callpay.passwordKey' => get_payment_setting('password', CALLPAY_PAYMENT_METHOD_NAME),
             'callpay.saltKey' => get_payment_setting('salt_key', CALLPAY_PAYMENT_METHOD_NAME),
+            'callpay.userId' => get_payment_setting('user_id', CALLPAY_PAYMENT_METHOD_NAME),
             'callpay.paymentUrl' => 'https://services.callpay.com/api',
         ]);
     }

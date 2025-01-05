@@ -60,7 +60,7 @@ class Callpay extends BaseCallpay
 
     public function getListTransactions(array $params = [])
     {
-        $relativeUrl = '/v1/user/'.getenv('FROM_CALLPAY_USER_ID').'/gateway-transaction' . ($params ? ('?' . http_build_query($params)) : '');
+        $relativeUrl = '/v1/user/'.getenv('CALLPAY_MERCHANT_ID').'/gateway-transaction' . ($params ? ('?' . http_build_query($params)) : '');
 
         do_action('payment_before_making_api_request', CALLPAY_PAYMENT_METHOD_NAME, $params);
 
