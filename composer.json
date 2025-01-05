@@ -1,0 +1,8 @@
+{
+    "name": "botble/callpay",
+    "description": "Callpay",
+    "type": "package",
+    "require": {
+        "zaqueuorlando870/laravel-callpay": "^1.1.0"
+    }
+}

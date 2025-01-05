@@ -1,0 +1,14 @@
+{
+    "id": "botble/callpay",
+    "name": "Callpay Payment Gateway",
+    "namespace": "Botble\\Callpay\\",
+    "provider": "Botble\\Callpay\\Providers\\CallpayServiceProvider",
+    "author": "Botble Technologies",
+    "url": "https://botble.com",
+    "version": "1.0.3",
+    "description": "Callpay payment gateway integration",
+    "minimum_core_version": "7.3.0",
+    "require": [
+        "botble/payment"
+    ]
+}
