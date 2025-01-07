@@ -7,8 +7,8 @@ use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Payment\Enums\PaymentStatusEnum;
 use Botble\Payment\Supports\PaymentHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Zaqueuorlando870\Callpay\Facades\Callpay;
+use Illuminate\Support\Arr; 
+use Botble\Callpay\Services\Handler\CallpayHandler;
 
 class CallpayController extends BaseController
 {
@@ -19,14 +19,15 @@ class CallpayController extends BaseController
         /**
          * @var array $result
          */
-        $result = Callpay::getPaymentData();
+        $callpayHandler = new CallpayHandler();
+        $result = $callpayHandler->getPaymentData();
 
         do_action('payment_after_api_response', CALLPAY_PAYMENT_METHOD_NAME, [], $result);
 
         if (! $result['status']) {
             return $response
                 ->setError()
-                ->setNextUrl(PaymentHelper::getCancelURL())
+                ->setNextUrl(PaymentHelper->getCancelURL())
                 ->setMessage($result['message']);
         }
 

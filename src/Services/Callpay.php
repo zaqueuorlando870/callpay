@@ -3,7 +3,7 @@
 namespace Botble\Callpay\Services;
 
 use Exception;
-use Zaqueuorlando870\Callpay\Callpay as BaseCallpay;
+use Botble\Callpay\Services\Handler\CallpayHandler as BaseCallpay;
 
 class Callpay extends BaseCallpay
 {

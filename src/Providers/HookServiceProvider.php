@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Throwable;
-use Zaqueuorlando870\Callpay\Facades\Callpay;
+use Botble\Callpay\Services\Handler\CallpayHandler;
 
 class HookServiceProvider extends ServiceProvider
 {
@@ -138,28 +138,34 @@ class HookServiceProvider extends ServiceProvider
         }
 
         try {
+            $callpayHandler = new CallpayHandler();
+
             $requestData = [
-                'reference' => Callpay::genTranxRef(),
-                'quantity' => 1,
-                'currency' => $paymentData['currency'],
-                'amount' => (int) $paymentData['amount'] * 100,
-                'email' => $paymentData['address']['email'],
-                'callback_url' => route('callpay.payment.callback'),
-                'metadata' => json_encode([
-                    'order_id' => $paymentData['order_id'],
-                    'customer_id' => $paymentData['customer_id'],
-                    'customer_type' => $paymentData['customer_type'],
-                ]),
+                'form_params' => [
+                    'reference' => substr($callpayHandler->genTranxRef(), 0, 20),
+                    'merchant_reference' => substr($callpayHandler->genTranxRef(), 0, 20),
+                    'quantity' => 1,
+                    'currency' => $paymentData['currency'],
+                    'amount' => number_format($paymentData['amount'] * 100, 2),
+                    'email' => $paymentData['address']['email'],
+                    'callback_url' => route('callpay.payment.callback'),
+                    'metadata' => json_encode([
+                        'order_id' => $paymentData['order_id'],
+                        'customer_id' => $paymentData['customer_id'],
+                        'customer_type' => $paymentData['customer_type'],
+                    ]),
+                ]
             ];
+            
 
             do_action('payment_before_making_api_request', CALLPAY_PAYMENT_METHOD_NAME, $requestData);
 
-            $response = Callpay::getAuthorizationResponse($requestData);
+            $response = $callpayHandler->getAuthorizationResponse($requestData);
 
             do_action('payment_after_api_response', CALLPAY_PAYMENT_METHOD_NAME, $requestData, (array) $response);
 
             if ($response['status']) {
-                header(header: 'Location: ' . $response['data']['authorization_url']);
+                header(header: 'Location: ' . $response['data']['url']);
                 exit;
             }
 
